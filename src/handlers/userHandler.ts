@@ -7,7 +7,7 @@ const store = new UserStore();
 export const signUp = async (req: Request, res: Response) => {
 	const user: User = {
 		first_name: req.body.first_name,
-		last_name: req.body.first_name,
+		last_name: req.body.last_name,
 		username: req.body.username,
 		email: req.body.email,
 		password: req.body.password

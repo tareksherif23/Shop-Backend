@@ -20,7 +20,7 @@ export const getOrder = async (req: Request, res: Response) => {
 export const createOrder = async (req: Request, res: Response) => {
 	const newOrder: Order = {
 		status: 'NEW',
-		user_id: res.locals.userId
+		user_id: res.locals.username
 	};
 	const order = await store.create(newOrder);
 	res.status(201).json({ result: 'success', data: order });
