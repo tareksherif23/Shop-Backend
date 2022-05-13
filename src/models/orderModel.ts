@@ -9,11 +9,11 @@ export type Order = {
 };
 
 export class OrderStore {
-	async index(): Promise<Order[]> {
+	async index(username: string): Promise<Order[]> {
 		try {
 			const conn = await client.connect();
-			const sql = 'SELECT * FROM orders';
-			const result = await conn.query(sql);
+			const sql = 'SELECT * FROM orders WHERE username = $1';
+			const result = await conn.query(sql, [username]);
 			conn.release();
 			return result.rows;
 		} catch (err) {

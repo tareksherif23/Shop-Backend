@@ -4,7 +4,8 @@ import { Request, Response } from 'express';
 const store = new OrderStore();
 
 export const getAllOrders = async (_req: Request, res: Response) => {
-	const orders = await store.index();
+	const username = res.locals.username;
+	const orders = await store.index(username);
 	res.status(200).json({ result: 'success', data: orders });
 };
 

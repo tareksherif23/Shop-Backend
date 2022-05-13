@@ -9,9 +9,9 @@ export const verifyAuthToken = function (req: Request, res: Response, next: Next
 	try {
 		const authorizationHeader = req.headers.authorization as string;
 		const token = authorizationHeader.split(' ')[1]; // Bearer <TOKEN>
-		const { username } = jwt.verify(token, process.env.JWT_SECRET as string) as JwtPayload;
+		const payload = jwt.verify(token, process.env.JWT_SECRET as string) as JwtPayload;
 		// add userId to res.locals
-		res.locals.username = username;
+		res.locals.username = payload.username;
 		console.log('username: ', res.locals.username);
 	} catch (err) {
 		return res.status(401).json('Access denied, invalid token');

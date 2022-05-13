@@ -16,7 +16,10 @@ export const signUp = async (req: Request, res: Response) => {
 		const newUser = await store.create(user);
 		var token = jwt.sign(
 			{ username: newUser.username, password: newUser.password },
-			process.env.JWT_SECRET as string
+			process.env.JWT_SECRET as string,
+			{
+				expiresIn: '6h'
+			}
 		);
 		res.json(token);
 	} catch (err) {
@@ -30,7 +33,9 @@ export const login = async (req: Request, res: Response) => {
 	try {
 		const u = await store.authenticate(username, password);
 		if (u) {
-			var token = jwt.sign({ username: username, password: password }, process.env.JWT_SECRET as string);
+			var token = jwt.sign({ username: username, password: password }, process.env.JWT_SECRET as string, {
+				expiresIn: '6h'
+			});
 			res.json(token);
 		} else throw new Error('username or password is incorrect');
 	} catch (err) {
