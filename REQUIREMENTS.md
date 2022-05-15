@@ -5,38 +5,43 @@ These are the notes from a meeting with the frontend developer that describe wha
 
 ## API Endpoints
 #### Products
-- Index 
-- Show
-- Create [token required]
-- [OPTIONAL] Top 5 most popular products 
-- [OPTIONAL] Products by category (args: product category)
-
+- Index `api/v1/products` [GET]
+- Search `api/v1/product/:productName` [GET]
+- Create `api/v1/products` [POST] [token required]
+- Delete `api/v1/products/:id` [DELETE] [token required]
+ 
 #### Users
-- Index [token required]
-- Show [token required]
-- Create N[token required]
+- Index `api/v1/users` [GET] [token required]
+- Show `api/v1/users/:id` [GET] [token required]
+- Signup `api/v1/users/signup` [POST]
+- Login `api/v1/users/login` [POST]
 
 #### Orders
-- Current Order by user (args: user id)[token required]
-- [OPTIONAL] Completed Orders by user (args: user id)[token required]
+- Index `api/v1/orders` [GET] [token required]
+- Show `api/v1/orders/:id` [GET] [token required]
+- Create `api/v1/orders` [POST] [token required]
+- Delete `api/v1/orders/:id` [DELETE] [token required]
 
-## Data Shapes
-#### Product
--  id
-- name
-- price
-- [OPTIONAL] category
+## Database Schema
+#### Product table
+- id `SERIAL PRIMARY KEY`
+- name `VARCHAR`
+- price `INTEGER`
 
-#### User
-- id
-- firstName
-- lastName
-- password
+#### User table
+- id `SERIAL PRIMARY KEY`
+- firstName `VARCHAR`
+- lastName `VARCHAR`
+- username `VARCHAR`
+- email `VARCHAR`
+- password `VARCHAR`
 
-#### Orders
-- id
-- id of each product in the order
-- quantity of each product in the order
-- user_id
-- status of order (active or complete)
+#### Orders table
+- id `SERIAL PRIMARY KEY`
+- status `VARCHAR`
+- user_id `INTEGER` `REFERENCES users(id)`
 
+#### Order_products table
+- order_id `INTEGER` `references orders(id)`
+- product_id `INTEGER` `references products(id)`
+- quantity `INTEGER`

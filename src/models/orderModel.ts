@@ -1,6 +1,6 @@
 import client from '../database';
 
-type OrderStatus = 'NEW' | 'PLACED' | 'PROCESSING' | 'OUT' | 'DELIVERED';
+type OrderStatus = 'ACTIVE' | 'COMPLETE';
 
 export type Order = {
 	id?: string;
@@ -9,11 +9,11 @@ export type Order = {
 };
 
 export class OrderStore {
-	async index(username: string): Promise<Order[]> {
+	async index(): Promise<Order[]> {
 		try {
 			const conn = await client.connect();
-			const sql = 'SELECT * FROM orders WHERE username = $1';
-			const result = await conn.query(sql, [username]);
+			const sql = 'SELECT * FROM orders';
+			const result = await conn.query(sql);
 			conn.release();
 			return result.rows;
 		} catch (err) {
@@ -56,6 +56,18 @@ export class OrderStore {
 			return order;
 		} catch (err) {
 			throw new Error(`Could not add product ${productId} to order ${orderId}: ${err}`);
+		}
+	}
+
+	async currentOrder(userId: string) {
+		try {
+			const conn = await client.connect();
+			const sql = 'SELECT * FROM orders WHERE id=($1) AND status=($2)';
+			const result = await conn.query(sql, [userId, 'ACTIVE']);
+			conn.release();
+			return result.rows[0];
+		} catch (err) {
+			throw new Error(`Could not get active order for user with id ${userId}: ${err}`);
 		}
 	}
 

@@ -1,54 +1,78 @@
-# Storefront Backend Project
+# E-commerce Shop Backend
+### A backend system for an e-commerce website that utilized the PERN stack and Typescript   
 
-## Getting Started
+[![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)](https://travis-ci.org/joemccann/dillinger)
 
-This repo contains a basic Node and Express app to get you started in constructing an API. To get started, clone this repo and run `yarn` in your terminal at the project root.
+## DB setup and connection
 
-## Required Technologies
-Your application must make use of the following libraries:
-- Postgres for the database
-- Node/Express for the application logic
-- dotenv from npm for managing environment variables
-- db-migrate from npm for migrations
-- jsonwebtoken from npm for working with JWTs
-- jasmine from npm for testing
+#### open the terminal and run the following commands to create and run the database:
 
-## Steps to Completion
+-   switch to the postgres user `su postgres`
+-   start psql `psql postgres`
+-   in psql run the following:
+    -   `CREATE USER shopDB_user WITH PASSWORD 'password';`
+    -   `CREATE DATABASE shop_backend;`
+    -   `\c storefront`
+    -   `GRANT ALL PRIVILEGES ON DATABASE shop_backend TO shopDB_user;`
+-   to test that it is working run `\dt` and it should output "No relations found."  
+- *For the test database do the following:*
+	- `CREATE DATABASE shop_backend_test;`
+	- `\c storefront_test`
+	- `GRANT ALL PRIVILEGES ON DATABASE shop_backend_test TO shopDB_user;` 
 
-### 1. Plan to Meet Requirements
+#### add the following environment variables to your .env file and replace the placeholders with your values :
 
-In this repo there is a `REQUIREMENTS.md` document which outlines what this API needs to supply for the frontend, as well as the agreed upon data shapes to be passed between front and backend. This is much like a document you might come across in real life when building or extending an API. 
+```sh
+POSTGRES_HOST = 127.0.0.1
+POSTGRES_PORT = 5432
+POSTGRES_DB = shop_backend
+POSTGRES_TEST_DB = shop_backend_test
+POSTGRES_USER = shopDB_user
+POSTGRES_PASSWORD = password
 
-Your first task is to read the requirements and update the document with the following:
-- Determine the RESTful route for each endpoint listed. Add the RESTful route and HTTP verb to the document so that the frontend developer can begin to build their fetch requests.    
-**Example**: A SHOW route: 'blogs/:id' [GET] 
+ENV = dev
+JWT_SECRET = <your_jwt_secret_string>
+BCRYPT_PEPPER = <your_bcrypt_secret_string>
+SALT_ROUNDS = <the_number_of_salt_rounds>
 
-- Design the Postgres database tables based off the data shape requirements. Add to the requirements document the database tables and columns being sure to mark foreign keys.   
-**Example**: You can format this however you like but these types of information should be provided
-Table: Books (id:varchar, title:varchar, author:varchar, published_year:varchar, publisher_id:string[foreign key to publishers table], pages:number)
+```
+## Set up
+-  `npm install` to install all dependencies
 
-**NOTE** It is important to remember that there might not be a one to one ratio between data shapes and database tables. Data shapes only outline the structure of objects being passed between frontend and API, the database may need multiple tables to store a single shape. 
+-  `npm run start-DB` to set up the database and get access via [http://127.0.0.1:5432](http://127.0.0.1:5432)
 
-### 2.  DB Creation and Migrations
+-  `npm run build` to build the app
+## Start the app
+-  `npm run start` to start the app and get access via [http://127.0.0.1:3000](http://127.0.0.1:3000) 
 
-Now that you have the structure of the databse outlined, it is time to create the database and migrations. Add the npm packages dotenv and db-migrate that we used in the course and setup your Postgres database. If you get stuck, you can always revisit the database lesson for a reminder. 
+## Test the app
 
-You must also ensure that any sensitive information is hashed with bcrypt. If any passwords are found in plain text in your application it will not pass.
+- Set the ENV variable in the .env file to test
 
-### 3. Models
+-  `npm run test` to run all tests
 
-Create the models for each database table. The methods in each model should map to the endpoints in `REQUIREMENTS.md`. Remember that these models should all have test suites and mocks.
+## Tech
 
-### 4. Express Handlers
+The project uses a number of open source projects to work properly:
+- [TypeScript] -  a strongly typed programming language that builds on JavaScript
+- [node.js] - evented I/O for the backend
+- [Express] - fast node.js network app framework
+- [PostgreSQL] - a powerful and open-source RDBMS
+- [Jasmine] - behavior-driven development framework for testing JavaScript code
 
-Set up the Express handlers to route incoming requests to the correct model method. Make sure that the endpoints you create match up with the enpoints listed in `REQUIREMENTS.md`. Endpoints must have tests and be CORS enabled. 
+## License
 
-### 5. JWTs
+Distributed under the MIT License. See `LICENSE.txt` for more information.
 
-Add JWT functionality as shown in the course. Make sure that JWTs are required for the routes listed in `REQUIUREMENTS.md`.
+## Contact
+#### Tarek Marzouk - [LinkedIn](https://www.linkedin.com/in/tarek-marzouk-300b82ab/) - tareksherif23@gmail.com
 
-### 6. QA and `README.md`
 
-Before submitting, make sure that your project is complete with a `README.md`. Your `README.md` must include instructions for setting up and running your project including how you setup, run, and connect to your database. 
+#### Project Link: https://github.com/tareksherif23/Shop-Backend
 
-Before submitting your project, spin it up and test each endpoint. If each one responds with data that matches the data shapes from the `REQUIREMENTS.md`, it is ready for submission!
+   [node.js]: <http://nodejs.org>
+   [express]: <http://expressjs.com>
+   [TypeScript]: <http://www.typescriptlang.org/>
+   [Sharp]: <http://github.com/lovell/sharp>
+   [PostgreSQL]: <http://postgresql.com>
+   [Jasmine]: <http://jasmine.github.io/>

@@ -4,7 +4,7 @@ import { getAllOrders, getOrder, createOrder, deleteOrder } from '../handlers/or
 
 export const orderRouter = express.Router();
 
-orderRouter.use(verifyAuthToken);
+orderRouter.use(verifyAuthToken); // authentication middleware added to all order routes
 
 orderRouter.get('/', getAllOrders);
 orderRouter.get('/:orderID', getOrder);

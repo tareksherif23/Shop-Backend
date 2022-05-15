@@ -4,6 +4,28 @@ import jwt from 'jsonwebtoken';
 
 const store = new UserStore();
 
+export const getAllUsers = async (_req: Request, res: Response) => {
+	try {
+		const users = await store.index();
+		res.status(200).json({ result: 'success', data: users });
+	} catch (err) {
+		res.status(500).send(err);
+	}
+};
+
+export const getUser = async (req: Request, res: Response) => {
+	try {
+		const id = req.params.userID;
+		const user = await store.show(id);
+		if (!user) {
+			return res.status(404).send(`couldn't find a user with id: ${id}`);
+		}
+		res.json({ result: 'success', data: user });
+	} catch (err) {
+		res.status(500).send(err);
+	}
+};
+
 export const signUp = async (req: Request, res: Response) => {
 	const user: User = {
 		first_name: req.body.first_name,

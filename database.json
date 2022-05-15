@@ -2,15 +2,15 @@
 	"dev": {
 		"driver": "pg",
 		"host": "127.0.0.1",
-		"database": "testDB2",
-		"user": "node-app",
+		"database": "shop_backend",
+		"user": "shopDB_user",
 		"password": "password"
 	},
 	"test": {
 		"driver": "pg",
 		"host": "127.0.0.1",
-		"database": "testDB2",
-		"user": "node-app",
+		"database": "shop_backend_test",
+		"user": "shopDB_user",
 		"password": "password"
 	}
 }
