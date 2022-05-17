@@ -10,15 +10,15 @@
 -   switch to the postgres user `su postgres`
 -   start psql `psql postgres`
 -   in psql run the following:
-    -   `CREATE USER shopDB_user WITH PASSWORD 'password';`
+    -   `CREATE USER shopdb_admin WITH PASSWORD 'pass@2022';`
     -   `CREATE DATABASE shop_backend;`
-    -   `\c storefront`
-    -   `GRANT ALL PRIVILEGES ON DATABASE shop_backend TO shopDB_user;`
+    -   `\c shop_backend`
+    -   `GRANT ALL PRIVILEGES ON DATABASE shop_backend TO shopdb_admin;`
 -   to test that it is working run `\dt` and it should output "No relations found."  
 - *For the test database do the following:*
 	- `CREATE DATABASE shop_backend_test;`
-	- `\c storefront_test`
-	- `GRANT ALL PRIVILEGES ON DATABASE shop_backend_test TO shopDB_user;` 
+	- `\c shop_backend_test`
+	- `GRANT ALL PRIVILEGES ON DATABASE shop_backend_test TO shopdb_admin;` 
 
 #### add the following environment variables to your .env file and replace the placeholders with your values :
 
@@ -27,8 +27,8 @@ POSTGRES_HOST = 127.0.0.1
 POSTGRES_PORT = 5432
 POSTGRES_DB = shop_backend
 POSTGRES_TEST_DB = shop_backend_test
-POSTGRES_USER = shopDB_user
-POSTGRES_PASSWORD = password
+POSTGRES_USER = shopdb_admin
+POSTGRES_PASSWORD = pass@2022
 
 ENV = dev
 JWT_SECRET = <your_jwt_secret_string>
@@ -39,7 +39,7 @@ SALT_ROUNDS = <the_number_of_salt_rounds>
 ## Set up
 -  `npm install` to install all dependencies
 
--  `npm run start-DB` to set up the database and get access via [http://127.0.0.1:5432](http://127.0.0.1:5432)
+-  `npm run start-db` to set up the database and get access via [http://127.0.0.1:5432](http://127.0.0.1:5432)
 
 -  `npm run build` to build the app
 ## Start the app

@@ -3,14 +3,14 @@
 		"driver": "pg",
 		"host": "127.0.0.1",
 		"database": "shop_backend",
-		"user": "shopDB_user",
-		"password": "password"
+		"user": "shopdb_admin",
+		"password": "pass@2022"
 	},
 	"test": {
 		"driver": "pg",
 		"host": "127.0.0.1",
 		"database": "shop_backend_test",
-		"user": "shopDB_user",
-		"password": "password"
+		"user": "shopdb_admin",
+		"password": "pass@2022"
 	}
 }

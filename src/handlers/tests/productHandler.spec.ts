@@ -35,7 +35,7 @@ describe('Product handler', () => {
 		});
 	});
 
-	it('should create a product on api/v1/products POST', (done) => {
+	it('should create a product on /products POST', (done) => {
 		const product: Product = {
 			name: 'Macbook pro M1',
 			price: 1500
@@ -53,7 +53,7 @@ describe('Product handler', () => {
 			});
 	});
 
-	it('should get the list of products on api/v1/products', (done) => {
+	it('should get the list of products on /products', (done) => {
 		request
 			.get('/products')
 			.set('Authorization', `Bearer ${token}`)
@@ -65,9 +65,9 @@ describe('Product handler', () => {
 			});
 	});
 
-	it('should get a single product on /products/:id', (done) => {
+	it('should get a single product on /products/:productName', (done) => {
 		request
-			.get(`/products/${productCreated.id}`)
+			.get(`/products/${productCreated.name}`)
 			.set('Authorization', `Bearer ${token}`)
 			.then((res) => {
 				expect(res.status).toBe(200);

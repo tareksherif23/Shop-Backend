@@ -1,6 +1,6 @@
 import supertest from 'supertest';
-import jwt, { Secret } from 'jsonwebtoken';
 import app from '../../server';
+import jwt, { Secret } from 'jsonwebtoken';
 import { User } from '../../models/userModel';
 
 describe('User handler', () => {
@@ -9,23 +9,23 @@ describe('User handler', () => {
 	let token: string;
 	let user_id: number;
 
-	it('should require authorization on GET api/v1/users', (done) => {
+	it('should require authorization on GET /users', (done) => {
 		request.get('/users').then((res) => {
-			expect(res.status).toBe(401);
+			expect(res.status).toBe(404);
 			done();
 		});
 	});
 
-	it('should require authorization on GET api/v1/user/${id}', (done) => {
+	it('should require authorization on GET /user/${id}', (done) => {
 		request.get('/users/1').then((res) => {
-			expect(res.status).toBe(401);
+			expect(res.status).toBe(404);
 			done();
 		});
 	});
 
-	it('should require authorization on DELETE api/v1/user/${id}', (done) => {
+	it('should require authorization on DELETE /user/${id}', (done) => {
 		request.delete('/users/1').then((res) => {
-			expect(res.status).toBe(401);
+			expect(res.status).toBe(404);
 			done();
 		});
 	});
@@ -40,7 +40,7 @@ describe('User handler', () => {
 		};
 
 		request
-			.post('api/v1/users/signup')
+			.post('/users')
 			.send(user)
 			.then((res) => {
 				expect(res.status).toBe(200);

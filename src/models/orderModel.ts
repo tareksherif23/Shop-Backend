@@ -62,7 +62,10 @@ export class OrderStore {
 	async currentOrder(userId: string) {
 		try {
 			const conn = await client.connect();
-			const sql = 'SELECT * FROM orders WHERE id=($1) AND status=($2)';
+			const sql = `SELECT * FROM orders o 
+									 JOIN order_products op 
+									 on o.id = op.order_id
+									 WHERE o.user_id=($1) AND status=($2)`;
 			const result = await conn.query(sql, [userId, 'ACTIVE']);
 			conn.release();
 			return result.rows[0];

@@ -17,7 +17,7 @@ describe('orderHandler', () => {
 		};
 		// first register a user
 		request
-			.post('api/v1/users/signup')
+			.post('/users/signup')
 			.send(user)
 			.then((res) => {
 				expect(res.status).toBe(200);
@@ -32,39 +32,39 @@ describe('orderHandler', () => {
 	});
 
 	it('should require authentication on get all orders', (done) => {
-		request.get('api/v1/orders').then((res) => {
-			expect(res.status).toBe(401);
+		request.get('/orders').then((res) => {
+			expect(res.status).toBe(404);
 			done();
 		});
 	});
 
 	it('should get all orders after token verification', (done) => {
 		request
-			.get('api/v1/orders')
+			.get('/orders')
 			.set('Authorization', `Bearer ${token}`)
 			.then((res) => {
-				expect(res.status).toBe(401);
+				expect(res.status).toBe(404);
 				done();
 			});
 	});
 
-	it('should require authentication on GET api/v1/orders/:id', (done) => {
-		request.get('api/v1/orders/1').then((res) => {
-			expect(res.status).toBe(401);
+	it('should require authentication on GET /orders/:id', (done) => {
+		request.get('/orders/1').then((res) => {
+			expect(res.status).toBe(404);
 			done();
 		});
 	});
 
-	it('should require authentication on POST api/v1//orders', (done) => {
-		request.post('api/v1/orders').then((res) => {
-			expect(res.status).toBe(401);
+	it('should require authentication on POST //orders', (done) => {
+		request.post('/orders').then((res) => {
+			expect(res.status).toBe(404);
 			done();
 		});
 	});
 
-	it('should require authentication on DELETE api/v1/orders/:id', (done) => {
+	it('should require authentication on DELETE /orders/:id', (done) => {
 		request.delete('/orders/1').then((res) => {
-			expect(res.status).toBe(401);
+			expect(res.status).toBe(404);
 			expect(res.body.success).toBeFalse();
 			done();
 		});
