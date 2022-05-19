@@ -28,8 +28,8 @@ export const searchProducts = async (req: Request, res: Response) => {
 export const createProduct = async (req: Request, res: Response) => {
 	try {
 		const newProduct: Product = {
-			name: req.body.productName,
-			price: req.body.productPrice
+			name: req.body.name,
+			price: req.body.price
 		};
 		const product = await store.create(newProduct);
 		res.status(201).json({ result: 'success', data: product });
@@ -40,7 +40,7 @@ export const createProduct = async (req: Request, res: Response) => {
 
 export const deleteProduct = async (req: Request, res: Response) => {
 	try {
-		const id = req.params.productID;
+		const id = req.params.id;
 		const deleted_product = await store.delete(id);
 		res.status(200).json({ result: 'success', data: deleted_product });
 	} catch (err) {

@@ -46,11 +46,11 @@ export class OrderStore {
 		}
 	}
 
-	async addProduct(quantity: number, orderId: string, productId: string): Promise<Order> {
+	async addProduct(orderId: string, productId: string, quantity: number): Promise<Order> {
 		try {
-			const sql = 'INSERT INTO order_products (quantity, order_id, product_id) VALUES($1, $2, $3) RETURNING *';
+			const sql = 'INSERT INTO order_products (order_id, product_id, quantity) VALUES($1, $2, $3) RETURNING *';
 			const conn = await client.connect();
-			const result = await conn.query(sql, [quantity, orderId, productId]);
+			const result = await conn.query(sql, [orderId, productId, quantity]);
 			const order = result.rows[0];
 			conn.release();
 			return order;
@@ -77,7 +77,7 @@ export class OrderStore {
 	async delete(id: string): Promise<Order> {
 		try {
 			const conn = await client.connect();
-			const sql = 'DELETE FROM orders WHERE id=($1)';
+			const sql = 'DELETE FROM orders WHERE id=($1) returning *';
 			const result = await conn.query(sql, [id]);
 			const order = result.rows[0];
 			conn.release();

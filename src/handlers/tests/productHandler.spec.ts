@@ -14,22 +14,22 @@ describe('Product handler', () => {
 			last_name: 'Sherif',
 			username: 'tshermor',
 			email: 'tsher@gmail.com',
-			password: 'veRyStrongPswd'
+			password: 'veRy%Strong%Pswd'
 		};
 		// first register a user
 		request
-			.post('api/v1/users/signup')
+			.post('/api/v1/users/signup')
 			.send(user)
 			.then((res) => {
 				expect(res.status).toBe(200);
-				expect(res.body.result).toBe('success');
 				token = res.body.token;
+				console.log(token);
 				done();
 			});
 	});
 
 	it('should require authorization on create product', (done) => {
-		request.post('/products').then((res) => {
+		request.post('/api/v1/products').then((res) => {
 			expect(res.status).toBe(401);
 			done();
 		});
@@ -42,37 +42,36 @@ describe('Product handler', () => {
 		};
 
 		request
-			.post('/products')
+			.post('/api/v1/products')
 			.set('Authorization', `Bearer ${token}`)
 			.send(product)
 			.then((res) => {
-				expect(res.status).toBe(200);
-				expect(res.body.result).toBe('success');
-				productCreated = res.body.product;
+				expect(res.status).toBe(201);
+				productCreated = res.body.data;
+				expect(productCreated.name).toEqual(product.name);
 				done();
 			});
 	});
 
 	it('should get the list of products on /products', (done) => {
 		request
-			.get('/products')
+			.get('/api/v1/products')
 			.set('Authorization', `Bearer ${token}`)
 			.then((res) => {
 				expect(res.status).toBe(200);
-				expect(res.body.result).toBe('success');
-				expect(res.body.products.length).toBeGreaterThan(0);
+				expect(res.body.data.length).toBeGreaterThan(0);
 				done();
 			});
 	});
 
 	it('should get a single product on /products/:productName', (done) => {
 		request
-			.get(`/products/${productCreated.name}`)
+			.get(`/api/v1/products/book`)
 			.set('Authorization', `Bearer ${token}`)
 			.then((res) => {
 				expect(res.status).toBe(200);
-				expect(res.body.result).toBe('success');
-				expect(res.body.product).toEqual(productCreated);
+				console.log(res.body.data);
+				expect(res.body.data[0].name).toEqual('Macbook pro M1');
 				done();
 			});
 	});

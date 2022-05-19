@@ -43,9 +43,20 @@ export const signUp = async (req: Request, res: Response) => {
 				expiresIn: '6h'
 			}
 		);
-		res.json(token);
+		res.json({ token: token });
 	} catch (err) {
+		console.log('errooorr:: ', err);
 		res.status(400).json(`an error occured: ${err}`);
+	}
+};
+
+export const deleteUser = async (req: Request, res: Response) => {
+	try {
+		const id = req.params.userID;
+		const deleted_user = await store.delete(id);
+		res.status(200).json({ result: 'success', data: deleted_user });
+	} catch (err) {
+		res.status(500).send(err);
 	}
 };
 
@@ -58,7 +69,7 @@ export const login = async (req: Request, res: Response) => {
 			var token = jwt.sign({ username: username, password: password }, process.env.JWT_SECRET as string, {
 				expiresIn: '6h'
 			});
-			res.json(token);
+			res.json({ token: token });
 		} else throw new Error('username or password is incorrect');
 	} catch (err) {
 		res.status(400).json(`an error occured: ${err}`);

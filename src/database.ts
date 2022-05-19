@@ -9,14 +9,14 @@ let client: Pool;
 
 console.log(`ENV set to: ${ENV}`);
 
-if (ENV === 'test') {
+if (ENV === 'dev') {
 	client = new Pool({
 		host: POSTGRES_HOST,
 		database: POSTGRES_DB,
 		user: POSTGRES_USER,
 		password: POSTGRES_PASSWORD
 	});
-} else if (ENV === 'dev') {
+} else if (ENV === 'test') {
 	client = new Pool({
 		host: POSTGRES_HOST,
 		database: POSTGRES_TEST_DB,

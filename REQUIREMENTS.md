@@ -42,6 +42,7 @@ These are the notes from a meeting with the frontend developer that describe wha
 - user_id `INTEGER` `REFERENCES users(id)`
 
 #### Order_products table
+- id `SERIAL PRIMARY KEY`
 - order_id `INTEGER` `references orders(id)`
 - product_id `INTEGER` `references products(id)`
 - quantity `INTEGER`
